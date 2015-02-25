@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.yeokm1.dvfsapp.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="FPS Low Bound:"
+        android:id="@+id/main_textview_fps_low_bound"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="FPS High Bound:"
+        android:id="@+id/main_textview_fps_high_bound"
+        android:layout_below="@+id/main_textview_fps_low_bound"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/main_edittext_fps_low_bound"
+        android:layout_alignTop="@+id/main_textview_fps_low_bound"
+        android:layout_toEndOf="@+id/main_textview_fps_high_bound"
+        android:layout_marginStart="37dp"
+        android:text="30" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/main_edittext_fps_high_bound"
+        android:layout_alignTop="@+id/main_textview_fps_high_bound"
+        android:layout_alignStart="@+id/main_edittext_fps_low_bound"
+        android:text="35" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/main_button_start_stop"
+        android:layout_marginBottom="81dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/main_edittext_fps_high_bound"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
