@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
             try {
                 int fpsLowBound = Integer.parseInt(lowBoundText.getText().toString());
                 int fpsHighBound = Integer.parseInt(highBoundText.getText().toString());
-                dvfsHandler = new DVFSHandler();
+                dvfsHandler = new DVFSHandler(getApplicationContext());
                 dvfsHandler.startDVFS(fpsLowBound, fpsHighBound);
 
             }catch(NumberFormatException e){
