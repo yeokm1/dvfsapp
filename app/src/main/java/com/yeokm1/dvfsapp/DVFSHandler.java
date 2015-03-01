@@ -31,7 +31,6 @@ public class DVFSHandler {
     private static final String PS_COMMAND = "ps dvfs-binary";
     private static final String KILL_COMMAND = "kill %s";
 
-    private boolean isActive = false;
 
     private Context context;
 
@@ -42,12 +41,7 @@ public class DVFSHandler {
 
 
     public void startDVFS(int lowBound, int highBound){
-        if(isActive){
-            stopDVFS();
-        }
-
-
-
+        stopDVFS();
         copyDVFSBinary();
 
         String dvfsCommand = String.format(DVFS_COMMAND, lowBound, highBound);
@@ -55,7 +49,7 @@ public class DVFSHandler {
         Shell.SU.run(CHMOD_COMMAND);
         sudo(dvfsCommand);
 
-        isActive = true;
+
     }
 
     public static void sudo(String...strings) {
@@ -76,6 +70,16 @@ public class DVFSHandler {
             }
             outputStream.close();
         }catch(IOException e){
+        }
+    }
+
+    public boolean isDVFSActive(){
+        List<String> psOutput = Shell.SU.run(PS_COMMAND);
+
+        if(psOutput.size() > 1){
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -100,17 +104,6 @@ public class DVFSHandler {
 
             Shell.SU.run(killProcess);
         }
-
-
-
-
-
-
-        if(!isActive){
-            return;
-        }
-
-        isActive = false;
 
     }
 
@@ -164,7 +157,4 @@ public class DVFSHandler {
         }
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
 }

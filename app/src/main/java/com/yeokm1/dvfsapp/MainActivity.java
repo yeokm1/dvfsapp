@@ -2,7 +2,6 @@ package com.yeokm1.dvfsapp;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ public class MainActivity extends ActionBarActivity {
     EditText highBoundText;
     Button startStopButton;
 
-    DVFSHandler dvfsHandler;
+    private DVFSHandler dvfsHandler;
 
 
     private static final String INVALID_FPS_VALUES = "Invalid FPS values provided";
@@ -41,24 +40,31 @@ public class MainActivity extends ActionBarActivity {
                 buttonPress();
             }
         });
+
+        dvfsHandler = new DVFSHandler(getApplicationContext());
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        refreshButtonText();
     }
 
     public void buttonPress(){
-        if(dvfsHandler == null){
 
+        if(dvfsHandler.isDVFSActive()){
+            dvfsHandler.stopDVFS();
+        } else {
             try {
                 int fpsLowBound = Integer.parseInt(lowBoundText.getText().toString());
                 int fpsHighBound = Integer.parseInt(highBoundText.getText().toString());
-                dvfsHandler = new DVFSHandler(getApplicationContext());
+
                 dvfsHandler.startDVFS(fpsLowBound, fpsHighBound);
 
             }catch(NumberFormatException e){
                 Toast.makeText(this, INVALID_FPS_VALUES, Toast.LENGTH_SHORT).show();
             }
-
-        } else {
-            dvfsHandler.stopDVFS();
-            dvfsHandler = null;
         }
 
         refreshButtonText();
@@ -66,29 +72,16 @@ public class MainActivity extends ActionBarActivity {
 
 
     private void refreshButtonText(){
-        if(dvfsHandler == null){
-            startStopButton.setText(DVFS_START);
-        } else {
+
+        boolean status = dvfsHandler.isDVFSActive();
+
+        if(status){
             startStopButton.setText(DVFS_STOP);
-        }
-    }
-
-
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        } else {
+            startStopButton.setText(DVFS_START);
         }
 
-        return super.onOptionsItemSelected(item);
+
     }
+
 }
