@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -27,6 +29,7 @@ public class DVFSHandler {
     private static final String DVFS_COMMAND = "/data/local/tmp/dvfs-binary %d %d &";
 
     private static final String PS_COMMAND = "ps dvfs-binary";
+    private static final String KILL_COMMAND = "kill %s";
 
     private boolean isActive = false;
 
@@ -68,11 +71,9 @@ public class DVFSHandler {
             try {
                 su.waitFor();
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
             outputStream.close();
         }catch(IOException e){
-            e.printStackTrace();
         }
     }
 
@@ -85,8 +86,15 @@ public class DVFSHandler {
         if(psOutput.size() > 1){
             String resultLine = psOutput.get(1);
 
-            String[] splitted  = resultLine.split(" ");
+            //get first number which is pid
+            Matcher matcher = Pattern.compile("\\d+").matcher(resultLine);
+            matcher.find();
 
+            String pidStr = matcher.group();
+
+            String killprocess = String.format(KILL_COMMAND, pidStr);
+
+            Shell.SU.run(killprocess);
 
         }
 
@@ -105,7 +113,7 @@ public class DVFSHandler {
     private void copyDVFSBinary() {
         AssetManager assetManager = context.getAssets();
 
-        String cachePath = context.getExternalCacheDir().getPath();
+        String cachePath = context.getCacheDir().getPath();
 
         InputStream in = null;
         OutputStream out = null;
