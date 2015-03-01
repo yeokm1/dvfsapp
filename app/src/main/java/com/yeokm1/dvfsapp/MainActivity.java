@@ -16,8 +16,10 @@ public class MainActivity extends ActionBarActivity {
     private static final int FPS_MIN = 20;
     private static final int FPS_MAX = 60;
 
-    private static final int FPS_DEFAULT_MIN = 30;
-    private static final int FPS_DEFAULT_MAX = 60;
+    private static final int FPS_DEFAULT_SELECTION_MIN = 30;
+    private static final int FPS_DEFAULT_SELECTION_MAX = 35;
+
+    private static final int FPS_FIXED_SELECTION_RANGE = 5;
 
     Button startStopButton;
 
@@ -31,8 +33,8 @@ public class MainActivity extends ActionBarActivity {
     private static final String DVFS_STOP = "Stop";
     private static final String DVFS_START = "Start";
 
-    private int lowBound = FPS_DEFAULT_MIN;
-    private int highBound = FPS_DEFAULT_MAX;
+    private int lowBound = FPS_DEFAULT_SELECTION_MIN;
+    private int highBound = FPS_DEFAULT_SELECTION_MAX;
 
 
     TextView lowFPSSelection;
@@ -59,17 +61,49 @@ public class MainActivity extends ActionBarActivity {
         dvfsHandler = new DVFSHandler(getApplicationContext());
 
         // create RangeSeekBar as Integer range between 20 and 75
-        RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(FPS_MIN, FPS_MAX, this);
+        final RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(FPS_MIN, FPS_MAX, this);
 
-        seekBar.setSelectedMinValue(FPS_DEFAULT_MIN);
-        seekBar.setSelectedMaxValue(FPS_DEFAULT_MAX);
+        seekBar.setSelectedMinValue(FPS_DEFAULT_SELECTION_MIN);
+        seekBar.setSelectedMaxValue(FPS_DEFAULT_SELECTION_MAX);
 
         seekBar.setNotifyWhileDragging(true);
         seekBar.setOnRangeSeekBarChangeListener(new OnRangeSeekBarChangeListener<Integer>() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
-                lowBound = minValue;
-                highBound = maxValue;
+
+                if(lowBound != minValue){
+                    //Means user has changed min
+                    int newMaxValue = minValue + FPS_FIXED_SELECTION_RANGE;
+
+                    if(newMaxValue > FPS_MAX){
+                        //Don't allow to change value at max
+                        seekBar.setSelectedMinValue(lowBound);
+                    } else {
+                        seekBar.setSelectedMaxValue(newMaxValue);
+                        lowBound = minValue;
+                        highBound = newMaxValue;
+                    }
+
+                } else if(highBound != maxValue){
+                    //Means user has changed max
+
+                    int newMinValue = maxValue - FPS_FIXED_SELECTION_RANGE;
+
+                    if(newMinValue < FPS_MIN){
+                        //Don't allow to change value at max
+                        seekBar.setSelectedMaxValue(highBound);
+                    } else {
+                        seekBar.setSelectedMinValue(newMinValue);
+                        lowBound = newMinValue;
+                        highBound = maxValue;
+                    }
+                }
+
+
+
+
+
+
                 refreshFPSText();
             }
         });
