@@ -1,51 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:id="@+id/main_layout"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.yeokm1.dvfsapp.MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="FPS Low Bound:"
-        android:id="@+id/main_textview_fps_low_bound"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="FPS High Bound:"
-        android:id="@+id/main_textview_fps_high_bound"
-        android:layout_below="@+id/main_textview_fps_low_bound"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/main_edittext_fps_low_bound"
-        android:layout_alignTop="@+id/main_textview_fps_low_bound"
-        android:layout_toEndOf="@+id/main_textview_fps_high_bound"
-        android:layout_marginStart="37dp"
-        android:text="30" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/main_edittext_fps_high_bound"
-        android:layout_alignTop="@+id/main_textview_fps_high_bound"
-        android:layout_alignStart="@+id/main_edittext_fps_low_bound"
-        android:text="35" />
 
     <Button
         android:layout_width="wrap_content"
@@ -54,7 +14,84 @@
         android:id="@+id/main_button_start_stop"
         android:layout_marginBottom="81dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/main_edittext_fps_high_bound"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select your FPS:"
+        android:id="@+id/main_textview_fps_selection"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="60"
+        android:id="@+id/main_textview_highest_fps"
+        android:layout_alignTop="@+id/main_layout_for_seekbar"
+        android:layout_alignParentEnd="true" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/main_layout_for_seekbar"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/main_textview_fps_selection"
+        android:layout_toStartOf="@+id/main_textview_highest_fps"
+        android:layout_toEndOf="@+id/main_textview_lowest_fps">
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="FPS Low Bound:"
+        android:id="@+id/main_textview_lowbound"
+        android:layout_below="@+id/main_layout_for_seekbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="FPS High Bound:"
+        android:id="@+id/main_textview_highbound"
+        android:layout_below="@+id/main_textview_lowbound"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="20"
+        android:id="@+id/main_textview_lowest_fps"
+        android:layout_alignTop="@+id/main_layout_for_seekbar"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="30"
+        android:id="@+id/main_textview_selected_low_fps"
+        android:layout_marginStart="32dp"
+        android:layout_alignTop="@+id/main_textview_lowbound"
+        android:layout_toEndOf="@+id/main_textview_highbound" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="60"
+        android:id="@+id/main_textview_selected_high_fps"
+        android:layout_alignBottom="@+id/main_textview_highbound"
+        android:layout_alignStart="@+id/main_textview_selected_low_fps" />
 
 </RelativeLayout>
