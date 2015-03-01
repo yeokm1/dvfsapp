@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">DVFS App</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">DVFS App</string>
 
 </resources>
