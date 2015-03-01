@@ -54,6 +54,8 @@ public class DVFSHandler {
 
         Shell.SU.run(CHMOD_COMMAND);
         sudo(dvfsCommand);
+
+        isActive = true;
     }
 
     public static void sudo(String...strings) {
@@ -83,8 +85,10 @@ public class DVFSHandler {
 
         List<String> psOutput = Shell.SU.run(PS_COMMAND);
 
-        if(psOutput.size() > 1){
-            String resultLine = psOutput.get(1);
+
+        //Kill multiple dvfs-binary just in case.
+        for(int i = 1; i < psOutput.size(); i++) {
+            String resultLine = psOutput.get(i);
 
             //get first number which is pid
             Matcher matcher = Pattern.compile("\\d+").matcher(resultLine);
@@ -92,11 +96,11 @@ public class DVFSHandler {
 
             String pidStr = matcher.group();
 
-            String killprocess = String.format(KILL_COMMAND, pidStr);
+            String killProcess = String.format(KILL_COMMAND, pidStr);
 
-            Shell.SU.run(killprocess);
-
+            Shell.SU.run(killProcess);
         }
+
 
 
 
@@ -151,11 +155,16 @@ public class DVFSHandler {
 
 
 
+
     private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;
         while((read = in.read(buffer)) != -1){
             out.write(buffer, 0, read);
         }
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }
