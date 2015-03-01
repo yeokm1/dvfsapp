@@ -74,7 +74,7 @@ public class DVFSHandler {
     }
 
     public boolean isDVFSActive(){
-        List<String> psOutput = Shell.SU.run(PS_COMMAND);
+        List<String> psOutput = Shell.SH.run(PS_COMMAND);
 
         if(psOutput.size() > 1){
             return true;
