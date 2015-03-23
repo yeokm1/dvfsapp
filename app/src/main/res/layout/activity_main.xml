@@ -94,4 +94,14 @@
         android:layout_alignBottom="@+id/main_textview_highbound"
         android:layout_alignStart="@+id/main_textview_selected_low_fps" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dynamic range based on battery %"
+        android:id="@+id/main_checkbox_dynamic_range"
+        android:layout_below="@+id/main_textview_highbound"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="48dp"
+        android:checked="false" />
+
 </RelativeLayout>

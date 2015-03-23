@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class MainActivity extends ActionBarActivity {
     TextView lowFPSSelection;
     TextView highFPSSelection;
 
+    CheckBox dynamicRangeSelection;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class MainActivity extends ActionBarActivity {
 
         lowFPSSelection = (TextView) findViewById(R.id.main_textview_selected_low_fps);
         highFPSSelection = (TextView) findViewById(R.id.main_textview_selected_high_fps);
+
+        dynamicRangeSelection = (CheckBox) findViewById(R.id.main_checkbox_dynamic_range);
 
         dvfsHandler = new DVFSHandler(getApplicationContext());
 
@@ -133,7 +138,20 @@ public class MainActivity extends ActionBarActivity {
         } else {
             try {
 
-                dvfsHandler.startDVFS(lowBound, highBound);
+                boolean dynamicRange = dynamicRangeSelection.isChecked();
+
+                int lower;
+                int higher;
+
+                if(dynamicRange){
+                    lower = DVFSHandler.DYNAMIC_RANGE;
+                    higher = DVFSHandler.DYNAMIC_RANGE;
+                } else {
+                    lower = lowBound;
+                    higher = highBound;
+                }
+
+                dvfsHandler.startDVFS(lower, higher);
 
             }catch(NumberFormatException e){
                 Toast.makeText(this, INVALID_FPS_VALUES, Toast.LENGTH_SHORT).show();
