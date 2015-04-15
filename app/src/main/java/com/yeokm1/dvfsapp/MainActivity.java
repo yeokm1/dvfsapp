@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     TextView highFPSSelection;
 
     CheckBox dynamicRangeSelection;
+    CheckBox bestPerformanceWhenChargingSelection;
 
 
     @Override
@@ -62,6 +63,7 @@ public class MainActivity extends ActionBarActivity {
         highFPSSelection = (TextView) findViewById(R.id.main_textview_selected_high_fps);
 
         dynamicRangeSelection = (CheckBox) findViewById(R.id.main_checkbox_dynamic_range);
+        bestPerformanceWhenChargingSelection = (CheckBox) findViewById(R.id.main_checkbox_charging_best_perf);
 
         dvfsHandler = new DVFSHandler(getApplicationContext());
 
@@ -139,6 +141,7 @@ public class MainActivity extends ActionBarActivity {
             try {
 
                 boolean dynamicRange = dynamicRangeSelection.isChecked();
+                boolean bestPerfWhenCharging = bestPerformanceWhenChargingSelection.isChecked();
 
                 int lower;
                 int higher;
@@ -151,7 +154,7 @@ public class MainActivity extends ActionBarActivity {
                     higher = highBound;
                 }
 
-                dvfsHandler.startDVFS(lower, higher);
+                dvfsHandler.startDVFS(lower, higher, bestPerfWhenCharging);
 
             }catch(NumberFormatException e){
                 Toast.makeText(this, INVALID_FPS_VALUES, Toast.LENGTH_SHORT).show();

@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/main_button_start_stop"
-        android:layout_marginBottom="81dp"
+        android:layout_marginBottom="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,6 +102,15 @@
         android:layout_below="@+id/main_textview_highbound"
         android:layout_alignParentStart="true"
         android:layout_marginTop="48dp"
+        android:checked="false" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Best performance during charging"
+        android:id="@+id/main_checkbox_charging_best_perf"
+        android:layout_below="@+id/main_checkbox_dynamic_range"
+        android:layout_alignParentStart="true"
         android:checked="false" />
 
 </RelativeLayout>

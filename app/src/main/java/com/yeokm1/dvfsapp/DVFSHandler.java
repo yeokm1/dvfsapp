@@ -27,8 +27,8 @@ public class DVFSHandler {
     private static final String DVFS_PATH = "/data/local/tmp/dvfs-binary";
     private static final String CHMOD_COMMAND = "chmod 777 /data/local/tmp/dvfs-binary";
 
-    private static final String DVFS_COMMAND_DYNAMIC = "/data/local/tmp/dvfs-binary &";
-    private static final String DVFS_COMMAND_RANGE = "/data/local/tmp/dvfs-binary %d %d &";
+    private static final String DVFS_COMMAND_DYNAMIC = "/data/local/tmp/dvfs-binary";
+    private static final String DVFS_COMMAND_RANGE = "/data/local/tmp/dvfs-binary %d %d";
 
     private static final String PS_COMMAND = "ps dvfs-binary";
     private static final String KILL_COMMAND = "kill %s";
@@ -44,7 +44,7 @@ public class DVFSHandler {
     }
 
 
-    public void startDVFS(int lowBound, int highBound){
+    public void startDVFS(int lowBound, int highBound, boolean bestPerformanceWhenCharging){
         stopDVFS();
         copyDVFSBinary();
 
@@ -54,6 +54,12 @@ public class DVFSHandler {
         } else {
             dvfsCommand = String.format(DVFS_COMMAND_RANGE, lowBound, highBound);
         }
+
+        if(bestPerformanceWhenCharging){
+            dvfsCommand += " -chg";
+        }
+
+        dvfsCommand += " &";
 
         Shell.SU.run(CHMOD_COMMAND);
         sudo(dvfsCommand);
